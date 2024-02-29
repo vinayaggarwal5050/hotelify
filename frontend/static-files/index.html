@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="./index.js"></script>
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="welcomeDiv">
+    <h3>Welcome to hotel booking site</h3>
+  </div>
+
+<div>
+  <form id="checkAvailibilityForm" onsubmit="return readFormData()">
+    <label for="checkin_date">Check In </label>
+    <input type="date" name="checkin_date" id="checkin_date">
+    <br>
+    <label for="checkout_date">Check Out </label>
+    <input type="date" name="checkout_date" id="checkout_date">
+    <br>
+    <label for="Adults">Check Out </label>
+    <select name="adults_count" name="adults_count" id="adults_count">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+    <br>
+    <label for="Children">Check Out </label>
+    <select name="children_count" name="children_count" id="children_count">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+    </select>
+    <br>
+    <button id="check_availability">Check Availability</button>
+  </form>
+</div>
+  
+<script>
+
+</script>
+</body>
+</html>

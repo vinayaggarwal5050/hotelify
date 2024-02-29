@@ -1,0 +1,118 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model PropertyOwner {
+  id                Int      @id @default(autoincrement())
+
+  email             String   @unique
+  password          String
+  phoneNumber       String?
+
+  firstName         String?
+  lastName          String?
+
+  createdAt         DateTime    @default(now())
+
+  company           Company?
+  hotels            Hotel[]
+
+  }
+
+
+
+model Company {
+  id                Int @id @default(autoincrement())
+  companyName       String?
+  address           String?
+  city              String?
+  state             String?
+  pincode           Int?
+  country           String?
+  gstin             String?
+
+  createdAt         DateTime    @default(now())
+
+  propertyOwnerId      Int  @unique
+  propertyOwner        PropertyOwner   @relation(fields: [propertyOwnerId], references: [id])
+
+}
+
+model  Hotel {
+  id                Int      @id @default(autoincrement())
+
+  hotelName         String?
+  address           String?
+  city              String?
+  state             String?
+  pincode           Int?
+  country           String?
+
+  gpsLocation       String?
+  subDomain         String?
+
+  liveStatus        Boolean? @default(false)
+
+  createdAt         DateTime    @default(now())
+
+  roomCategories    String[] @default(["Uncategorized"])
+  hotelAmenities    String[] @default([""])
+  noOfRooms         Int?
+  // scaleOfOperation  ScaleOfOpeationEnum
+
+  categories        Category[]
+  rooms             Room[]
+
+  propertyOwnerId      Int
+  propertyOwner        PropertyOwner   @relation(fields: [propertyOwnerId], references: [id])  
+
+}
+
+// enum ScaleOfOpeationEnum {
+//   Small
+//   Medium
+//   Large
+// }
+
+model Category {
+  id                Int      @id @default(autoincrement())
+  categoryName      String   @default("Uncategorized")
+  amenities         String[] @default([""])
+  description       String?
+
+  defaultPrice      Int?    @default(1000)
+  decidedPrice      Int?
+
+  adultDefaultOccupancy    Int  @default(2)
+  childDefaultOccupancy    Int  @default(2)
+  totalDefaultOccupancy    Int  @default(3)
+  adultMaxOccupancy        Int? @default(3)
+  childMaxOccupanty        Int? @default(2)
+
+  additionalAdultPrice     Int? @default(1000)
+  additionalChildPrice     Int? @default(500)
+
+  hotelId           Int
+  hotel             Hotel   @relation(fields: [hotelId], references: [id])  
+
+}
+
+model Room {
+  id                Int      @id @default(autoincrement())
+
+  category          String
+  roomNumber        Int @unique
+  roomPrefix        String?
+  description       String?
+  inService         Boolean @default(true)
+  occupied          Boolean @default(false)
+
+  hotelId           Int
+  hotel             Hotel   @relation(fields: [hotelId], references: [id])  
+}
